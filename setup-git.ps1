@@ -18,8 +18,7 @@ Write-Host "Working in: $cwd"
 
 # Initialize repo if needed
 if (-not (Test-Path .git)) {
-    & git init
-    if ($LASTEXITCODE -ne 0) { Abort "git init failed" }
+    git init || Abort "git init failed"
     Write-Host "Initialized empty git repository." -ForegroundColor Green
 } else {
     Write-Host "Existing git repository detected." -ForegroundColor Cyan
@@ -38,8 +37,7 @@ if (-not $userEmail) {
 }
 
 # Add & commit
-& git add .
-if ($LASTEXITCODE -ne 0) { Abort "git add failed" }
+git add . || Abort "git add failed"
 $message = Read-Host 'Commit message (default: "chore: initial site snapshot")'
 if (-not $message) { $message = 'chore: initial site snapshot' }
 # If repo already has commits warn and skip commit
@@ -48,8 +46,7 @@ if ($hasCommits) {
     Write-Host "Repository already has commits — creating a new commit anyway." -ForegroundColor Yellow
 }
 
-& git commit -m "$message"
-if ($LASTEXITCODE -ne 0) { Write-Host "No changes to commit or commit failed." -ForegroundColor Yellow }
+git commit -m "$message" || Write-Host "No changes to commit or commit failed." -ForegroundColor Yellow
 
 # Ensure main branch
 try {
@@ -66,18 +63,15 @@ if ($remote) {
     if ($originExists) {
         $ok = Read-Host 'Origin already exists — overwrite it? (y/N)'
         if ($ok -match '^[Yy]') {
-            & git remote remove origin
-            if ($LASTEXITCODE -ne 0) { Abort "Failed to remove existing origin" }
+            git remote remove origin
         } else {
             Write-Host 'Skipping remote update.' -ForegroundColor Cyan
             exit 0
         }
     }
-    & git remote add origin $remote
-    if ($LASTEXITCODE -ne 0) { Abort 'Failed to add remote origin' }
+    git remote add origin $remote || Abort 'Failed to add remote origin'
     Write-Host 'Pushing to origin main...' -ForegroundColor Cyan
-    & git push -u origin main
-    if ($LASTEXITCODE -ne 0) { Abort 'git push failed — check your auth or remote URL' }
+    git push -u origin main || Abort 'git push failed — check your auth or remote URL'
     Write-Host 'Push complete.' -ForegroundColor Green
 } else {
     Write-Host 'No remote provided — local repo created.' -ForegroundColor Cyan
