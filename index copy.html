@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liêu Bích Trân • Hồ sơ cá nhân</title>
+    <meta name="description"
+        content="Hồ sơ giới thiệu Liêu Bích Trân: nghệ thuật, toán học, thiết kế, nghiên cứu, AI, coding." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <header class="site-header" id="top">
+        <nav class="nav">
+            <div class="brand">Liêu Bích Trân</div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Chuyển giao diện"
+                title="Chuyển giao diện">🌓</button>
+            <button id="navToggle" class="nav-toggle" aria-label="Menu">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#gioi-thieu">Giới thiệu</a></li>
+                <li><a href="#so-thich">Sở thích</a></li>
+                <li><a href="#hoc-tap">Học tập & Dự án</a></li>
+                <li><a href="#ky-nang">Kỹ năng</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="gioi-thieu">
+            <div class="hero-content">
+                <h1>Xin chào, mình là <span class="highlight">Liêu Bích Trân</span></h1>
+                <p class="tagline">Mình hiện đang là<strong>sinh viên năm 2 ngành Arttech</strong>, <strong>đại học
+                        kinh tế tphcm (UEH) </strong>, đây là 1 trang web nhỏ giới thiệu về bản thân mình, hong phải
+                    portfolio chuyên nghiệp đâu vì mình chỉ là tay mơ thoi và trang web này sẽ thể hiện sở thích thường
+                    nhật của mình cũng như ghi lại hành trình phát triển của mình á !!
+                    ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧
+
+                <div class="quick-tags">
+                    <span>Art ↔
+                        Math</span><span>Illustrator</span><span>Photoshop</span><span>AI</span><span>Coding</span>
+                </div>
+                <div class="hero-actions">
+                    <a class="btn primary" href="#hoc-tap">Xem dự án</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="avatar-placeholder" aria-label="Ảnh đại diện">
+                    <span>Ảnh<br>3D<br>(Blender)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote đưa lên đầu sau hero -->
+        <section class="section" id="quote" data-animate>
+            <div class="quote-layout">
+                <figure class="quote-card">
+                    <blockquote>
+                        <p>“Nếu mình có thể quay lại quá khứ… mình muốn trở nên can đảm hơn để không bỏ lỡ những điều
+                            quan trọng.”</p>
+                    </blockquote>
+                    <figcaption>— <span class="quote-author">Orange</span></figcaption>
+                    <p class="quote-note">Mình chọn câu này bởi vì nó gợi nhắc rằng sự dũng cảm không chỉ là đối mặt với
+                        khó khăn, mà còn là dám nắm bắt những cơ hội, những khoảnh khắc tưởng chừng nhỏ bé nhưng lại
+                        mang ý nghĩa lớn. Câu thoại khiến mình suy nghĩ về tầm quan trọng của hiện tại: ta không thể
+                        quay ngược thời gian, nhưng ta có thể chọn cách sống sao cho sau này không phải nuối tiếc. Đây
+                        cũng là nguồn cảm hứng để mình bước đi tự tin hơn trong học tập, công việc và cả trong hành
+                        trình phát triển bản thân</p>
+                </figure>
+                <figure class="quote-image" aria-label="Poster minh hoạ Orange">
+                    <img src="Orange.jpg" alt="Poster Orange" loading="lazy" />
+                </figure>
+            </div>
+        </section>
+
+        <section class="section" id="thong-tin" data-animate>
+            <h2>Để mình giới thiệu nhé ꒰ᐢ. .ᐢ꒱₊˚⊹</h2>
+            <div class="grid cards">
+                <article class="card">
+                    <h3>Nick name</h3>
+                    <p>Chaeromliu</p>
+                </article>
+                <article class="card">
+                    <h3>Ngày sinh</h3>
+                    <p>15 / 12 / 2006</p>
+                    <h3>Cung hoàng đạo</h3>
+                    <p>Nhân Mã</p>
+                </article>
+                <article class="card">
+                    <h3>Học vấn</h3>
+                    <p>THPT Mạc Đĩnh Chi<br>ĐH Kinh tế TP.HCM (UEH)</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="so-thich" data-animate>
+            <h2>Trong thời gian học về Art, đây là những điều mình quan tâm ⸜(｡˃ ᵕ ˂ )⸝♡</h2>
+            <div class="grid cards">
+                <article class="card">
+                    <h3>Nghệ thuật & Toán học</h3>
+                    <p>Khai thác hình học, áp dụng tỉ lệ bố cục vào nghệ thuật</p>
+                </article>
+                <article class="card">
+                    <h3>Viết proposal nghiên cứu lĩnh vực Arttech </h3>
+                    <p>Tối ưu bố cục trực quan cho ý tưởng sáng tạo & học thuật.</p>
+                </article>
+                <article class="card">
+                    <h3>Phần mềm đồ hoạ</h3>
+                    <p>Illustrator, Photoshop, Premiere – từ đồ hoạ tĩnh đến biên tập video cơ bản.</p>
+                </article>
+                <article class="card">
+                    <h3>AI & Coding</h3>
+                    <p>Ứng dụng AI hỗ trợ code ( các ngôn ngữ mình đã dùng qua là VS Code, Python, HTML, Processing).
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="hoc-tap" data-animate>
+            <h2>Dự án & Ghi chép</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">Learning Diary</div>
+                    <div class="content">
+                        <h3>Bài tập trên lớp</h3>
+                        <p>Ghi chép tiến trình toán học & nghệ thuật; liên kết khái niệm để củng cố hiểu biết.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">Thiết kế</div>
+                    <div class="content">
+                        <h3>Đồ hoạ & Biên tập</h3>
+                        <p>Sử dụng Illustrator / Photoshop / Premiere để xây dựng visual & video ngắn.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">Prototype</div>
+                    <div class="content">
+                        <h3>Cảm biến & Camera tự zoom</h3>
+                        <p>Thử nghiệm phần cứng + code để camera theo dõi chủ thể, dùng AI hỗ trợ ý tưởng.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">GitHub Copilot</div>
+                    <div class="content">
+                        <h3>Hỗ trợ lập trình</h3>
+                        <p>Tận dụng gợi ý để tăng tốc viết prototype & học cú pháp mới.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">Research</div>
+                    <div class="content">
+                        <h3>Proposal & Phân tích</h3>
+                        <p>Chủ đề nghiên cứu phát triển moodboard đa phương tiện</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section" id="ky-nang" data-animate>
+            <h2>Kỹ năng</h2>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3>Thiết kế</h3>
+                    <ul>
+                        <li>Illustrator (vector, layout)</li>
+                        <li>Photoshop (màu sắc, chỉnh sửa)</li>
+                        <li>Premiere (biên tập cơ bản)</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Research</h3>
+                    <ul>
+                        <li>Đặt câu hỏi / giả thuyết</li>
+                        <li>Cronbach’s alpha, Kappa</li>
+                        <li>EFA</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Coding & AI</h3>
+                    <ul>
+                        <li>Python, HTML, Processing</li>
+                        <li>VS Code / GitHub Copilot</li>
+                        <li>Prototype cảm biến</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Ngôn ngữ & Viết</h3>
+                    <ul>
+                        <li>Dịch & paraphrase</li>
+                        <li>Tóm tắt học thuật</li>
+                        <li>Learning diary</li>
+                        <li>Phân tích dữ liệu (cơ bản)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section contact" id="lien-he" data-animate>
+            <h2>Liên hệ</h2>
+            <p>Email: lieubichtranalie@gmail.com</p>
+            <p class="muted">(Hiện tại là placeholder)</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© <span id="year"></span> Liêu Bích Trân. Tạo bởi HTML/CSS/JS đơn giản.</p>
+        <a href="#top" class="back-top" aria-label="Lên đầu trang">↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
