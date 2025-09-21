@@ -47,7 +47,7 @@
     --focus-ring: 0 0 0 3px rgba(129, 140, 248, .5);
 
     /* áº¢nh ná»n + overlay (Ã¡p dá»¥ng cho theme sÃ¡ng hiá»‡n táº¡i) */
-    --bg-image: url('image.png');
+    --bg-image: url('Ảnh/image.png');
     --bg-overlay: rgba(255, 255, 255, 0.38);
 }
 
@@ -63,7 +63,7 @@
     --color-accent: #818cf8;
     --color-accent-rgb: 129, 140, 248;
     /* Ảnh nền riêng cho dark mode */
-    --bg-image: url('image2.png');
+    --bg-image: url('Ảnh/image2.png');
     /* Tint tối phủ lên ảnh để chữ dễ đọc hơn */
     --bg-overlay: rgba(10, 12, 16, 0.62);
     /* tăng/giảm alpha (0.5 - 0.75) để điều chỉnh độ tối */

@@ -313,22 +313,22 @@
         {
             chapter: 'Chapter 1: Vì sao lại là Arttech',
             text: 'Cơ duyên của mình đến với Arttech thật sự rất bất ngờ. Vào năm lớp 12, khi đứng trước lựa chọn ngành đại học, mình cảm thấy bối rối vì không tìm thấy ngành nào phù hợp với sở thích và ước mơ của bản thân.',
-            img: 'p1.jpg'
+            img: 'Ảnh/p1.jpg'
         },
         {
             chapter: 'Chapter 1: Vì sao lại là Arttech',
             text: 'Nhưng rồi khi biết đến Arttech, mình ngay lập tức nhận ra đây chính là con đường mình muốn theo đuổi. Từ đó, mình đã dành khoảng thời gian cuối cùng của năm học để tập trung hết sức cho mục tiêu này.',
-            img: 'p2.jpg'
+            img: 'Ảnh/p2.jpg'
         },
         {
             chapter: 'Chapter 2: Mình nỗ lực để đạt được gì',
             text: 'Từ nhỏ mình đã yêu thích những hiệu ứng và kỹ xảo 3D trong phim ảnh, và luôn mơ một ngày nào đó có thể tự tay tạo ra hoặc tham gia vào một dự án phim sử dụng chúng. Art & Tech cho mình cơ hội biến ước mơ ấy thành hiện thực.',
-            img: 'p3.jpg'
+            img: 'Ảnh/p3.jpg'
         },
         {
             chapter: 'Chapter 2: Mình nỗ lực để đạt được gì',
             text: 'Điều mình trân trọng nhất ở ngành này chính là sự kết hợp hài hòa giữa nghệ thuật và công nghệ. Nó cho phép mình vừa phát triển khả năng sáng tạo thiết kế, minh họa, vừa học cách lập trình và xây dựng sản phẩm. Mình tin rằng sự kết hợp này sẽ giúp mình trở thành một người đa di năng trong lĩnh vực thiết kế, có khả năng làm chủ cả phần hình ảnh lẫn phần vận hành công nghệ, để tạo ra những sản phẩm mang dấu ấn cá nhân.',
-            img: 'p4.jpg'
+            img: 'Ảnh/p4.jpg'
         }
     ];
 
