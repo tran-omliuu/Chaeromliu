@@ -1132,6 +1132,35 @@ html[data-theme='light'] body {
     #arttech-story .md\:w-1\/2 {
         width: 100%;
     }
+
+    /* Mobile: chữ ở trên, ảnh ở dưới */
+    #arttech-story .text-card>div {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Đảm bảo text content ở trên */
+    #arttech-story .text-card>div>div:first-child {
+        order: 1;
+    }
+
+    /* Ảnh ở dưới */
+    #arttech-story .text-card>div>div:last-child {
+        order: 2;
+        padding: 1rem !important;
+        margin-right: 0 !important;
+        grid-column: auto !important;
+    }
+
+    /* Nút mũi tên vào trong trên mobile */
+    #art-prev {
+        left: 0.5rem !important;
+    }
+
+    #art-next {
+        right: 0.5rem !important;
+    }
 }
 
 /* ArtTech card styles to ensure text clarity and proper contrast */
@@ -1349,27 +1378,6 @@ html[data-theme='light'] body {
     #arttech-img {
         width: 100%;
         height: auto;
-    }
-
-    /* Mobile-specific fixes for ArtTech section */
-    #arttech-story .relative.flex.items-center.justify-center {
-        padding: 1rem !important;
-        margin-right: 0 !important;
-    }
-
-    /* Move arrow buttons inside on mobile */
-    #art-prev {
-        left: 0.5rem !important;
-    }
-
-    #art-next {
-        right: 0.5rem !important;
-    }
-
-    /* Ensure arrows are visible on mobile */
-    #art-prev,
-    #art-next {
-        z-index: 10;
     }
 }
 
