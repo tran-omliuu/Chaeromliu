@@ -38,7 +38,7 @@
                 aria-pressed="false">🔔</button>
             <!-- Performance mode toggle: reduces animations / effects -->
             <button id="perfToggle" class="theme-toggle" aria-label="Toggle performance mode"
-                title="Performance mode (reduce effects)" aria-pressed="false">⚡</button>
+                title="Performance mode (reduce effects)" aria-pressed="false" style="display: none;">⚡</button>
             <button id="navToggle" class="nav-toggle" aria-label="Menu">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#gioi-thieu">Introduction ૮꒰ ˶• ༝ •˶ꜱა ♡ </a></li>
@@ -147,7 +147,7 @@
         <section id="arttech-story" class="section" data-animate>
             <div class="max-w-6xl mx-auto px-4">
                 <div class="text-card">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" style="grid-column: 1 / -1;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                         <!-- Left: text content -->
                         <div class="p-6 md:p-8">
                             <h2 class="arttech-heading">Why ArtTech?</h2>
@@ -177,8 +177,7 @@
                         </div>
 
                         <!-- Right: image column -->
-                        <div class="relative flex items-center justify-center p-0 overflow-visible mr-2"
-                            style="grid-column: 2 / 3;">
+                        <div class="relative flex items-center justify-center p-4 md:p-0 overflow-visible">
                             <div class="w-full h-full flex items-center justify-center p-0">
                                 <div class="img-clipper tilt-wrap w-full h-full rounded-2xl overflow-hidden">
                                     <img id="arttech-img" src="Ảnh/p1.jpg" alt="Phase image"
@@ -187,7 +186,7 @@
                             </div>
                             <!-- Navigation arrows (SVG triangles, transparent background; placed outside the white card) -->
                             <button id="art-prev" aria-label="Previous"
-                                class="absolute -left-10 top-1/2 -translate-y-1/2 p-3 rounded-full transition-transform"
+                                class="absolute left-2 md:-left-10 top-1/2 -translate-y-1/2 p-3 rounded-full transition-transform z-10"
                                 title="Previous">
                                 <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                                     <defs>
@@ -201,7 +200,7 @@
                                 </svg>
                             </button>
                             <button id="art-next" aria-label="Next"
-                                class="absolute -right-10 top-1/2 -translate-y-1/2 p-3 rounded-full transition-transform"
+                                class="absolute right-2 md:-right-10 top-1/2 -translate-y-1/2 p-3 rounded-full transition-transform z-10"
                                 title="Next">
                                 <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                                     <defs>
@@ -429,7 +428,6 @@
         <section class="section contact" id="lien-he" data-animate>
             <h2>Contact</h2>
             <p>Email: lieubichtranalie@gmail.com</p>
-            <p class="muted">(Currently a placeholder)</p>
         </section>
     </main>
 
