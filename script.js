@@ -4,6 +4,7 @@
 (function () {
     const root = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
+    const perfToggle = document.getElementById('perfToggle');
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
     const yearEl = document.getElementById('year');
@@ -24,6 +25,26 @@
         localStorage.setItem(THEME_KEY, next);
     }
     if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
+    // Performance mode (stored in localStorage)
+    const PERF_KEY = 'bt-perf';
+    let perfMode = localStorage.getItem(PERF_KEY) === '1';
+    if (perfMode) document.body.classList.add('performance-mode');
+    function togglePerf() {
+        perfMode = !perfMode;
+        perfToggle?.setAttribute('aria-pressed', String(perfMode));
+        if (perfMode) {
+            document.body.classList.add('performance-mode');
+            localStorage.setItem(PERF_KEY, '1');
+            // dispatch custom event so subsystems can adapt
+            document.dispatchEvent(new CustomEvent('perfmodechange', { detail: { enabled: true } }));
+        } else {
+            document.body.classList.remove('performance-mode');
+            localStorage.removeItem(PERF_KEY);
+            document.dispatchEvent(new CustomEvent('perfmodechange', { detail: { enabled: false } }));
+        }
+    }
+    perfToggle?.addEventListener('click', togglePerf);
 
     // Sound toggle placeholder - wired later
     const soundToggleBtn = document.getElementById('soundToggle');
@@ -64,7 +85,8 @@
         resize();
         window.addEventListener('resize', () => { cancelAnimationFrame(rafId); resize(); loop(); });
 
-        const points = Array.from({ length: 42 }, () => ({
+        let baseCount = 42;
+        const points = Array.from({ length: baseCount }, () => ({
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
             r: 1 + Math.random() * 2.1,
@@ -73,7 +95,15 @@
             tone: Math.random()
         }));
 
+        let pauseScroll = false;
+        let scrollTimer = null;
         function loop() {
+            if (document.body.classList.contains('performance-mode') || pauseScroll) {
+                // In perf mode or active scroll, just schedule a light retry later
+                cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => loop());
+                return;
+            }
             ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             const theme = document.documentElement.getAttribute('data-theme');
             const styles = getComputedStyle(document.documentElement);
@@ -122,8 +152,111 @@
             rafId = requestAnimationFrame(loop);
         }
         loop();
+
+        window.addEventListener('scroll', () => {
+            pauseScroll = true;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => { pauseScroll = false; }, 120); // resume shortly after scroll stops
+        }, { passive: true });
+
+        // React to performance mode changes
+        document.addEventListener('perfmodechange', e => {
+            if (e.detail.enabled) {
+                // ensure canvas is cleared
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            } else {
+                // resume animation
+                cancelAnimationFrame(rafId);
+                loop();
+            }
+        });
     }
 
+    /* ================= Lightbox Viewer ================= */
+    (function () {
+        const lb = document.getElementById('lightbox');
+        if (!lb) return;
+        const imgEl = document.getElementById('lightbox-img');
+        const capEl = document.getElementById('lightbox-cap');
+        const closeBtn = lb.querySelector('.lightbox-close');
+        const prevBtn = lb.querySelector('.lightbox-nav.prev');
+        const nextBtn = lb.querySelector('.lightbox-nav.next');
+        let currentList = []; // array of {src, cap, el}
+        let idx = 0;
+        let lastFocus = null;
+
+        function buildList(scope) {
+            const figs = Array.from(scope.querySelectorAll('.carousel-track .slide'));
+            return figs.map(f => {
+                const img = f.querySelector('img');
+                const cap = f.querySelector('figcaption');
+                return { src: img?.src, cap: cap?.textContent || '', fig: f };
+            });
+        }
+
+        function show(i) {
+            if (!currentList.length) return;
+            idx = (i + currentList.length) % currentList.length;
+            const item = currentList[idx];
+            // If GIF, restart by adding timestamp (do not mutate original fig)
+            let src = item.src;
+            if (/\.gif(\?|$)/i.test(src)) src = src.split('?')[0] + '?t=' + Date.now();
+            imgEl.src = src;
+            imgEl.alt = item.cap || 'Image';
+            capEl.textContent = item.cap;
+            // Toggle transparent background removal for specific assets
+            const baseName = src.split('/').pop().toLowerCase();
+            if (baseName.includes('asset 1.png') || baseName.includes('mock up.png') || baseName.includes('dangoo.png')) {
+                imgEl.classList.add('no-bg');
+            } else {
+                imgEl.classList.remove('no-bg');
+            }
+        }
+
+        function openFromFigure(fig) {
+            const carousel = fig.closest('[data-carousel]');
+            if (!carousel) return;
+            currentList = buildList(carousel);
+            idx = currentList.findIndex(it => it.fig === fig);
+            if (idx < 0) idx = 0;
+            lastFocus = document.activeElement;
+            lb.hidden = false;
+            document.body.style.overflow = 'hidden';
+            show(idx);
+            closeBtn.focus();
+        }
+
+        function close() {
+            lb.hidden = true;
+            document.body.style.overflow = '';
+            currentList = []; idx = 0;
+            if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        // Event delegation: click on carousel images
+        document.addEventListener('click', e => {
+            const fig = e.target.closest && e.target.closest('.carousel-track .slide');
+            if (!fig) return;
+            const img = fig.querySelector('img');
+            if (!img) return;
+            // only left click
+            if (e.button && e.button !== 0) return;
+            openFromFigure(fig);
+        });
+
+        closeBtn.addEventListener('click', close);
+        prevBtn.addEventListener('click', () => show(idx - 1));
+        nextBtn.addEventListener('click', () => show(idx + 1));
+
+        lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+        document.addEventListener('keydown', e => {
+            if (lb.hidden) return;
+            if (e.key === 'Escape') { e.preventDefault(); close(); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+        });
+    })();
     /* -------------------- UI click sound (Web Audio) -------------------- */
     (function setupUIAudio() {
         const AUDIO_KEY = 'bt-audio-enabled';
@@ -311,23 +444,23 @@
 (function () {
     const phases = [
         {
-            chapter: 'Chapter 1: Vì sao lại là Arttech',
-            text: 'Cơ duyên của mình đến với Arttech thật sự rất bất ngờ. Vào năm lớp 12, khi đứng trước lựa chọn ngành đại học, mình cảm thấy bối rối vì không tìm thấy ngành nào phù hợp với sở thích và ước mơ của bản thân.',
+            chapter: 'Chapter 1: Why ArtTech',
+            text: 'My path to ArtTech was quite unexpected. In my final year of high school, when I faced the choice of a university major, I felt lost because nothing seemed to align with my interests and dreams.',
             img: 'Ảnh/p1.jpg'
         },
         {
-            chapter: 'Chapter 1: Vì sao lại là Arttech',
-            text: 'Nhưng rồi khi biết đến Arttech, mình ngay lập tức nhận ra đây chính là con đường mình muốn theo đuổi. Từ đó, mình đã dành khoảng thời gian cuối cùng của năm học để tập trung hết sức cho mục tiêu này.',
+            chapter: 'Chapter 1: Why ArtTech',
+            text: 'When I discovered ArtTech, I immediately realized this was the direction I wanted. I spent the last stretch of the school year fully focused on that goal.',
             img: 'Ảnh/p2.jpg'
         },
         {
-            chapter: 'Chapter 2: Mình nỗ lực để đạt được gì',
-            text: 'Từ nhỏ mình đã yêu thích những hiệu ứng và kỹ xảo 3D trong phim ảnh, và luôn mơ một ngày nào đó có thể tự tay tạo ra hoặc tham gia vào một dự án phim sử dụng chúng. Art & Tech cho mình cơ hội biến ước mơ ấy thành hiện thực.',
+            chapter: 'Chapter 2: What I strive for',
+            text: 'Since I was small, I have loved visual effects and 3D techniques in films, dreaming of creating or contributing to a project using them. Art & Tech gives me the opportunity to make that dream real.',
             img: 'Ảnh/p3.jpg'
         },
         {
-            chapter: 'Chapter 2: Mình nỗ lực để đạt được gì',
-            text: 'Điều mình trân trọng nhất ở ngành này chính là sự kết hợp hài hòa giữa nghệ thuật và công nghệ. Nó cho phép mình vừa phát triển khả năng sáng tạo thiết kế, minh họa, vừa học cách lập trình và xây dựng sản phẩm. Mình tin rằng sự kết hợp này sẽ giúp mình trở thành một người đa di năng trong lĩnh vực thiết kế, có khả năng làm chủ cả phần hình ảnh lẫn phần vận hành công nghệ, để tạo ra những sản phẩm mang dấu ấn cá nhân.',
+            chapter: 'Chapter 2: What I strive for',
+            text: 'What I value most is the harmony between art and technology. It lets me develop creativity in design and illustration while learning to program and build products. This combination can make me versatile—able to handle visuals and the underlying tech—to create work with personal identity.',
             img: 'Ảnh/p4.jpg'
         }
     ];
@@ -349,7 +482,7 @@
             b.type = 'button';
             b.setAttribute('role', 'tab');
             b.setAttribute('aria-selected', 'false');
-            b.setAttribute('aria-label', 'Giai đoạn ' + (i + 1));
+            b.setAttribute('aria-label', 'Phase ' + (i + 1));
             b.addEventListener('click', () => {
                 idx = i;
                 renderPhase(idx, true);
@@ -426,4 +559,291 @@
 
     // init
     if (imgEl && textEl) renderPhase(0);
+})();
+
+/* ============= Modern tilt interaction for ArtTech image ============= */
+(function () {
+    const wrap = document.querySelector('#arttech-story .tilt-wrap');
+    const target = document.querySelector('#arttech-story .tilt-target');
+    if (!wrap || !target) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let rect; let rafId = null; let rotateX = 0, rotateY = 0; let currentX = 0, currentY = 0;
+    function measure() { rect = wrap.getBoundingClientRect(); }
+    window.addEventListener('resize', measure, { passive: true });
+    measure();
+    function animate() {
+        const ease = .12;
+        rotateX += (currentY - rotateX) * ease;
+        rotateY += (currentX - rotateY) * ease;
+        target.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        rafId = requestAnimationFrame(animate);
+    }
+    function onMove(e) {
+        // recalc rect each move since wrapper floats vertically
+        rect = wrap.getBoundingClientRect();
+        const isTouch = e.type.startsWith('touch');
+        const point = isTouch ? e.touches[0] : e;
+        const x = (point.clientX - rect.left) / rect.width; // 0..1
+        const y = (point.clientY - rect.top) / rect.height; // 0..1
+        const maxRy = 9;  // smaller rotateY to avoid flip artifacts
+        const maxRx = 7;  // smaller rotateX
+        currentY = (0.5 - y) * maxRx; // rotateX (invert)
+        currentX = (x - 0.5) * maxRy; // rotateY
+        if (!rafId) animate();
+    }
+    function reset() {
+        cancelAnimationFrame(rafId); rafId = null;
+        target.style.transform = 'translateZ(0)';
+        rotateX = rotateY = currentX = currentY = 0;
+    }
+    function enableTilt(enable) {
+        if (enable) {
+            wrap.addEventListener('pointermove', onMove);
+            wrap.addEventListener('pointerleave', reset);
+            wrap.addEventListener('touchmove', onMove, { passive: true });
+            wrap.addEventListener('touchend', reset);
+        } else {
+            wrap.removeEventListener('pointermove', onMove);
+            wrap.removeEventListener('pointerleave', reset);
+            wrap.removeEventListener('touchmove', onMove);
+            wrap.removeEventListener('touchend', reset);
+            reset();
+        }
+    }
+    enableTilt(!document.body.classList.contains('performance-mode'));
+    document.addEventListener('perfmodechange', e => enableTilt(!e.detail.enabled));
+})();
+
+/* ================= Generic Carousel Initializer (Projects) ================= */
+(function () {
+    const carousels = document.querySelectorAll('[data-carousel]');
+    if (!carousels.length) return;
+
+    carousels.forEach(setupCarousel);
+
+    function setupCarousel(root) {
+        const track = root.querySelector('.carousel-track');
+        if (!track) return;
+        const slides = Array.from(track.querySelectorAll('.slide'));
+        const prev = root.querySelector('.carousel-nav.prev');
+        const next = root.querySelector('.carousel-nav.next');
+        const dotsWrap = root.querySelector('.carousel-dots');
+        let index = slides.findIndex(s => s.classList.contains('active'));
+        if (index < 0) index = 0;
+        let imagesLoaded = false;
+
+        function loadImages() {
+            if (imagesLoaded) return;
+            slides.forEach(sl => {
+                // Load deferred images
+                const img = sl.querySelector('img[data-src]');
+                if (img) {
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                }
+                // Load video sources
+                const video = sl.querySelector('video.carousel-video');
+                if (video) {
+                    const sources = video.querySelectorAll('source[data-src]');
+                    sources.forEach(src => {
+                        src.src = src.getAttribute('data-src');
+                        src.removeAttribute('data-src');
+                    });
+                    video.load();
+                }
+            });
+            imagesLoaded = true;
+        }
+
+        // Build dots
+        const dots = [];
+        slides.forEach((_, i) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.setAttribute('role', 'tab');
+            b.setAttribute('aria-selected', 'false');
+            b.setAttribute('aria-label', `Slide ${i + 1}`);
+            b.addEventListener('click', () => goTo(i, true));
+            dotsWrap.appendChild(b); dots.push(b);
+        });
+
+        function update() {
+            slides.forEach((s, i) => {
+                if (i === index) { s.classList.add('active'); s.removeAttribute('aria-hidden'); }
+                else { s.classList.remove('active'); s.setAttribute('aria-hidden', 'true'); }
+            });
+            dots.forEach((d, i) => d.setAttribute('aria-selected', i === index ? 'true' : 'false'));
+            // Move track so the current slide is in view (slides laid out horizontally)
+            track.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        function goTo(i, user) {
+            loadImages();
+            index = (i + slides.length) % slides.length;
+            update();
+
+            // Handle video playback (pause all, play active)
+            slides.forEach((sl, idx) => {
+                const video = sl.querySelector('video.carousel-video');
+                if (video) {
+                    if (idx === index) {
+                        video.play().catch(() => { }); // play active video
+                    } else {
+                        video.pause();
+                        video.currentTime = 0; // reset to start
+                    }
+                }
+            });
+
+            // restart GIF animation for newly active slide (clone technique) - only for non-video slides
+            const activeSlide = slides[index];
+            const img = activeSlide.querySelector('img:not(video img)');
+            if (img && /\.gif(\?|$)/i.test(img.src)) {
+                const src = img.src;
+                // Force restart by replacing with a fresh element
+                const clone = img.cloneNode(true);
+                clone.removeAttribute('tabindex');
+                // Remove any previous cache-busting query then add timestamp
+                const base = src.split('?')[0];
+                clone.src = base + '?t=' + Date.now();
+                img.replaceWith(clone);
+            }
+            if (user) {
+                const focusTarget = activeSlide.querySelector('video, img');
+                if (focusTarget) { focusTarget.setAttribute('tabindex', '-1'); focusTarget.focus({ preventScroll: true }); }
+            }
+        }
+
+        prev?.addEventListener('click', () => goTo(index - 1, true));
+        next?.addEventListener('click', () => goTo(index + 1, true));
+
+        // Keyboard support when focus inside carousel
+        root.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1, true); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(index - 1, true); }
+        });
+
+        // Swipe (basic)
+        let startX = null; let deltaX = 0;
+        track.addEventListener('pointerdown', e => { startX = e.clientX; deltaX = 0; track.setPointerCapture(e.pointerId); });
+        track.addEventListener('pointermove', e => { if (startX !== null) { deltaX = e.clientX - startX; } });
+        track.addEventListener('pointerup', e => { if (startX !== null) { if (Math.abs(deltaX) > 60) { if (deltaX < 0) goTo(index + 1, true); else goTo(index - 1, true); } startX = null; } });
+
+        // Lazy load images only when carousel enters viewport or first nav
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(en => {
+                if (en.isIntersecting) {
+                    loadImages();
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.2 });
+        io.observe(root);
+
+        update();
+    }
+})();
+
+/* ================= Project Card Stack: Expand + Tabs ================= */
+(function () {
+    const cards = document.querySelectorAll('.project-card');
+    if (!cards.length) return;
+
+    let openCard = null;
+
+    function collapse(card) {
+        if (!card) return;
+        card.classList.remove('expanded');
+        const toggle = card.querySelector('.project-toggle');
+        const body = card.querySelector('.project-body');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        if (body) body.hidden = true;
+        if (openCard === card) openCard = null;
+    }
+
+    function expand(card, focusBody) {
+        if (openCard && openCard !== card) collapse(openCard);
+        const toggle = card.querySelector('.project-toggle');
+        const body = card.querySelector('.project-body');
+        card.classList.add('expanded', 'expanding');
+        requestAnimationFrame(() => card.classList.remove('expanding'));
+        if (toggle) toggle.setAttribute('aria-expanded', 'true');
+        if (body) body.hidden = false;
+        openCard = card;
+        if (focusBody && body) {
+            body.setAttribute('tabindex', '-1');
+            body.focus({ preventScroll: true });
+        }
+        // Lazy init carousels that might have been hidden initially
+        const notInit = body?.querySelectorAll('[data-carousel] .carousel-track:not([data-init])');
+        notInit?.forEach(track => { track.setAttribute('data-init', '1'); /* existing carousel IIFE already set up earlier */ });
+    }
+
+    cards.forEach(card => {
+        const toggle = card.querySelector('.project-toggle');
+        if (!toggle) return;
+        toggle.addEventListener('click', (e) => {
+            const expanded = card.classList.contains('expanded');
+            if (expanded) { collapse(card); }
+            else { expand(card, true); }
+        });
+        // Keyboard toggle with Enter/Space when focused on button handled by default (button element)
+    });
+
+    // Auto open first card for initial impression
+    if (cards[0]) expand(cards[0], false);
+
+    // Anchor hash navigation: auto expand targeted project card
+    function handleHash() {
+        const id = location.hash.slice(1);
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (target && target.classList.contains('project-card')) {
+            expand(target, false);
+            target.classList.add('anchor-focus');
+            setTimeout(() => target.classList.remove('anchor-focus'), 1400);
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    window.addEventListener('hashchange', handleHash);
+    handleHash();
+
+    /* Tabs (mobile) */
+    function setupTabs(scope) {
+        const tabButtons = scope.querySelectorAll('.proj-tab');
+        const panels = scope.querySelectorAll('.tab-panel');
+        if (!tabButtons.length) return;
+        function activate(id) {
+            tabButtons.forEach(btn => {
+                const is = btn.dataset.tab === id;
+                btn.setAttribute('aria-selected', is ? 'true' : 'false');
+            });
+            panels.forEach(p => {
+                const is = p.id === id;
+                if (window.matchMedia('(max-width:859px)').matches) {
+                    p.hidden = !is;
+                } else {
+                    p.hidden = false; // desktop shows both
+                }
+            });
+        }
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => activate(btn.dataset.tab));
+            btn.addEventListener('keydown', (e) => {
+                if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+                e.preventDefault();
+                const arr = Array.from(tabButtons);
+                let idx = arr.indexOf(btn);
+                idx = e.key === 'ArrowRight' ? (idx + 1) % arr.length : (idx - 1 + arr.length) % arr.length;
+                arr[idx].focus();
+                activate(arr[idx].dataset.tab);
+            });
+        });
+        // initial
+        activate(tabButtons[0].dataset.tab);
+        // respond to resize (switching between desktop+mobile)
+        window.addEventListener('resize', () => activate(Array.from(tabButtons).find(b => b.getAttribute('aria-selected') === 'true')?.dataset.tab || tabButtons[0].dataset.tab));
+    }
+
+    cards.forEach(c => setupTabs(c));
 })();

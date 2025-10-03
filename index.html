@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Liêu Bích Trân • Hồ sơ cá nhân</title>
+    <title>Liêu Bích Trân • Personal Profile</title>
     <meta name="description"
-        content="Hồ sơ giới thiệu Liêu Bích Trân: nghệ thuật, toán học, thiết kế, nghiên cứu, AI, coding." />
+        content="Personal profile of Liêu Bích Trân: art, mathematics, design, research, AI, coding." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap"
@@ -18,13 +18,13 @@
 
 <body>
     <!-- Curtain reveal overlay -->
-    <div id="curtain" class="curtain ready" role="dialog" aria-label="Nhấn để mở" tabindex="0">
+    <div id="curtain" class="curtain ready" role="dialog" aria-label="Click to open" tabindex="0">
         <div class="curtain-panel left"></div>
         <div class="curtain-panel right"></div>
         <div class="curtain-center">
             <div class="curtain-inner">
                 <span class="curtain-logo">𐔌՞꜆..꜀՞𐦯</span>
-                <span class="curtain-hint">Click để mở ✦ hoặc nhấn Enter</span>
+                <span class="curtain-hint">Click to open ✦ or press Enter</span>
             </div>
         </div>
     </div>
@@ -32,18 +32,20 @@
     <header class="site-header" id="top">
         <nav class="nav">
             <div class="brand">Chaeromliu</div>
-            <button id="themeToggle" class="theme-toggle" aria-label="Chuyển giao diện"
-                title="Chuyển giao diện">🌓</button>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌓</button>
             <!-- Sound toggle: plays subtle UI clicks when enabled -->
-            <button id="soundToggle" class="theme-toggle" aria-label="Âm thanh giao diện" title="Bật/Tắt âm"
+            <button id="soundToggle" class="theme-toggle" aria-label="Interface sound" title="Toggle sound"
                 aria-pressed="false">🔔</button>
+            <!-- Performance mode toggle: reduces animations / effects -->
+            <button id="perfToggle" class="theme-toggle" aria-label="Toggle performance mode"
+                title="Performance mode (reduce effects)" aria-pressed="false">⚡</button>
             <button id="navToggle" class="nav-toggle" aria-label="Menu">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#gioi-thieu">Giới thiệu ૮꒰ ˶• ༝ •˶꒱ა ♡ </a></li>
-                <li><a href="#so-thich">Sở thích và lí do chọn ngành</a></li>
-                <li><a href="#hoc-tap">Học tập & Dự án</a></li>
-                <li><a href="#ky-nang">Kỹ năng</a></li>
-                <li><a href="#lien-he">Liên hệ</a></li>
+                <li><a href="#gioi-thieu">Introduction ૮꒰ ˶• ༝ •˶ꜱა ♡ </a></li>
+                <li><a href="#so-thich">Interests & Why ArtTech</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#ky-nang">Skills</a></li>
+                <li><a href="#lien-he">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -52,69 +54,65 @@
     <main>
         <section class="hero" id="gioi-thieu">
             <div class="hero-content">
-                <h1>Xin chào, mình là <span class="highlight">Trân</span></h1>
-                <p class="tagline">Mình hiện đang là<strong>sinh viên năm 2 ngành Arttech</strong>, <strong>đại học
-                        kinh tế tphcm (UEH) </strong>, đây là 1 trang web nhỏ giới thiệu về bản thân mình, hong phải
-                    portfolio chuyên nghiệp đâu vì mình chỉ là tay mơ thoi và trang web này sẽ thể hiện sở thích thường
-                    nhật của mình cũng như ghi lại hành trình phát triển của mình á !!
-                    ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧
+                <h1>Hello, I'm <span class="highlight">Trân</span></h1>
+                <p class="tagline">I’m a <strong>second-year ArtTech student</strong> at <strong>UEH (University of
+                        Economics Ho Chi Minh City)</strong>. This is a small personal page—not a professional
+                    portfolio—just a cozy place to share what I like and record my growth journey!! ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧
 
                 <div class="quick-tags">
                     <span>Art ↔
                         Math</span><span>Illustrator</span><span>Photoshop</span><span>AI</span><span>Coding</span>
                 </div>
                 <div class="hero-actions">
-                    <a class="btn primary btn-project" href="#hoc-tap">Xem dự án •⩊• </a>
+                    <a class="btn primary btn-project" href="#projects">View Projects •⩊• </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="avatar-placeholder" aria-label="Ảnh đại diện">
-                    <img src="Ảnh/cogimyun.jpg" alt="Ảnh đại diện" class="avatar-img" loading="lazy" />
+                <div class="avatar-placeholder" aria-label="Avatar image">
+                    <img src="Ảnh/cogimyun.jpg" alt="Avatar" class="avatar-img" loading="lazy" />
                 </div>
             </div>
         </section>
 
-        <!-- Quote đưa lên đầu sau hero -->
+        <!-- Quote placed after hero -->
         <section class="section" id="quote" data-animate>
             <div class="quote-layout">
                 <figure class="quote-card">
                     <blockquote>
-                        <p>“Nếu mình có thể quay lại quá khứ… mình muốn trở nên can đảm hơn để không bỏ lỡ những điều
-                            quan trọng.”</p>
+                        <p>“If I could go back in time… I would want to be braver so I wouldn’t miss important things.”
+                        </p>
                     </blockquote>
                     <figcaption>— <span class="quote-author">Orange</span></figcaption>
-                    <p class="quote-note">Mình chọn câu này bởi vì nó gợi nhắc rằng sự dũng cảm không chỉ là đối mặt với
-                        khó khăn, mà còn là dám nắm bắt những cơ hội, những khoảnh khắc tưởng chừng nhỏ bé nhưng lại
-                        mang ý nghĩa lớn. Từ khi được coi bộ phim này, câu thoại đó đã khiến mình suy nghĩ về tầm quan
-                        trọng của hiện tại: ta không thể
-                        quay ngược thời gian, nhưng ta có thể chọn cách sống sao cho sau này không phải nuối tiếc. Đây
-                        cũng là nguồn cảm hứng để mình bước đi tự tin hơn trong học tập, công việc và cả trong hành
-                        trình phát triển bản thân.</p>
+                    <p class="quote-note">I chose this line because it reminds me that courage isn’t only about facing
+                        difficulty — it’s also about daring to seize fleeting moments that carry meaning. Since watching
+                        the film, it made me reflect on how important the present is: we cannot rewind time, but we can
+                        live so that we won’t regret it later. It inspires me to move forward with more confidence in
+                        study, work, and personal growth.</p>
                 </figure>
-                <figure class="quote-image" aria-label="Poster minh hoạ Orange">
-                    <img src="Ảnh/Orange.jpg" alt="Poster Orange" loading="lazy" />
+                <figure class="quote-image" aria-label="Orange poster illustration">
+                    <img src="Ảnh/Orange.jpg" alt="Orange poster" loading="lazy" />
                 </figure>
             </div>
         </section>
 
         <section class="section" id="thong-tin" data-animate>
-            <h2>Để mình giới thiệu nhé ꒰ᐢ. .ᐢ꒱₊˚⊹</h2>
+            <h2>Let me introduce myself ꒰ᐢ. .ᐢ꒱₊˚⊹</h2>
             <div class="grid cards">
                 <article class="card">
-                    <h3>Họ tên đầy đủ là </h3>
+                    <h3>Full name</h3>
                     <p>⋆｡°୨ Liêu Bích Trân ୧°｡ </p>
-                    <h3>Nick name</h3>
+                    <h3>Nickname</h3>
                     <p>Chaeromliu</p>
                 </article>
                 <article class="card">
-                    <h3>Ngày sinh</h3>
-                    <p>Bí mật (ᵕ—ᴗ—)</p>
-                    <p>( Bật mí là mình sinh vào giữa tháng 12 trong mùa đông ấm áp ⋆❅*𖢔𐂂꙳)</p>
-                    <h3>Cung hoàng đạo</h3>
-                    <p>Mình là 1 Nhân Mã chính hiệu !</p>
+                    <h3>Date of birth</h3>
+                    <p>Secret (ᵕ—ᴗ—)</p>
+                    <p>(Hint: mid-December in a warm winter ⋆❅*𖢔𐂂꙳)</p>
+                    <h3>Zodiac</h3>
+                    <p>A true Sagittarius!</p>
                 </article>
                 <article class="card">
-                    <h3>Học vấn</h3>
+                    <h3>Education</h3>
                     <p>2017-2021 <strong>THCS Hoàng Lê Kha</strong><br>2021-2024 <strong>THPT Mạc Đĩnh Chi</strong><br>
                         2025- Now <strong>ĐH Kinh tế TP.HCM
                             (UEH)</strong></p>
@@ -123,23 +121,23 @@
         </section>
 
         <section class="section" id="so-thich" data-animate>
-            <h2>Trong thời gian học về Art, đây là những điều mình quan tâm ⸜(｡˃ ᵕ ˂ )⸝♡</h2>
+            <h2>While studying art, these are things I care about ⸜(｡˃ ᵕ ˂ )⸝♡</h2>
             <div class="grid cards">
                 <article class="card">
-                    <h3>Nghệ thuật & Toán học</h3>
-                    <p>Khai thác hình học, áp dụng tỉ lệ bố cục vào nghệ thuật</p>
+                    <h3>Art & Mathematics</h3>
+                    <p>Exploring geometry, applying proportional composition to art.</p>
                 </article>
                 <article class="card">
-                    <h3>Viết proposal nghiên cứu lĩnh vực Arttech </h3>
-                    <p>Tối ưu bố cục trực quan cho ý tưởng sáng tạo & học thuật.</p>
+                    <h3>Writing ArtTech research proposals</h3>
+                    <p>Optimizing visual layout for creative & academic ideas.</p>
                 </article>
                 <article class="card">
-                    <h3>Phần mềm đồ hoạ</h3>
-                    <p>Illustrator, Photoshop, Premiere – từ đồ hoạ tĩnh đến biên tập video cơ bản.</p>
+                    <h3>Graphic software</h3>
+                    <p>Illustrator, Photoshop, Premiere – from static graphics to basic video editing.</p>
                 </article>
                 <article class="card">
                     <h3>AI & Coding</h3>
-                    <p>Ứng dụng AI hỗ trợ code ( các ngôn ngữ mình đã dùng qua là VS Code, Python, HTML, Processing).
+                    <p>Using AI to assist code (I’ve used VS Code, Python, HTML, Processing).
                     </p>
                 </article>
             </div>
@@ -152,7 +150,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" style="grid-column: 1 / -1;">
                         <!-- Left: text content -->
                         <div class="p-6 md:p-8">
-                            <h2 class="arttech-heading">Tại sao lại là Arttech nhỉ ? </h2>
+                            <h2 class="arttech-heading">Why ArtTech?</h2>
                             <!-- Progress / navigation meta row -->
                             <div class="arttech-meta flex items-center gap-4 mt-2 mb-3" aria-hidden="true">
                                 <div id="arttech-phase-counter"
@@ -182,9 +180,9 @@
                         <div class="relative flex items-center justify-center p-0 overflow-visible mr-2"
                             style="grid-column: 2 / 3;">
                             <div class="w-full h-full flex items-center justify-center p-0">
-                                <div class="img-clipper w-full h-full rounded-2xl overflow-hidden">
+                                <div class="img-clipper tilt-wrap w-full h-full rounded-2xl overflow-hidden">
                                     <img id="arttech-img" src="Ảnh/p1.jpg" alt="Phase image"
-                                        class="w-full object-cover transition-transform duration-500 transform shadow-md hover:scale-105" />
+                                        class="tilt-target w-full object-cover transition-transform duration-500 transform shadow-md hover:scale-105" />
                                 </div>
                             </div>
                             <!-- Navigation arrows (SVG triangles, transparent background; placed outside the white card) -->
@@ -222,84 +220,234 @@
             </div>
         </section>
 
-        <section class="section" id="hoc-tap" data-animate>
-            <h2>Dự án & Ghi chép</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="time">Learning Diary</div>
-                    <div class="content">
-                        <h3>Bài tập trên lớp</h3>
-                        <p>Ghi chép tiến trình toán học & nghệ thuật; liên kết khái niệm để củng cố hiểu biết.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time">Thiết kế</div>
-                    <div class="content">
-                        <h3>Đồ hoạ & Biên tập</h3>
-                        <p>Sử dụng Illustrator / Photoshop / Premiere để xây dựng visual & video ngắn.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time">Interactive Coding</div>
-                    <div class="content">
-                        <h3>Ứng dụng code vào sản phẩm tương tác: Tracking tay & Camera tự zoom</h3>
-                        <p>Code giao diện trên processing</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time">Research</div>
-                    <div class="content">
-                        <h3>Proposal & Phân tích</h3>
-                        <p>Chủ đề nghiên cứu phát triển moodboard đa phương tiện</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
 
         <section class="section" id="ky-nang" data-animate>
-            <h2>Kỹ năng</h2>
+            <h2>Skills</h2>
             <div class="skills-grid">
                 <div class="skill-group">
-                    <h3>Thiết kế</h3>
+                    <h3>Design</h3>
                     <ul>
-                        <li>Illustrator (vector, layout)</li>
-                        <li>Photoshop (màu sắc, chỉnh sửa)</li>
-                        <li>Premiere (biên tập cơ bản)</li>
+                        <li><a href="#project-design">Illustrator (vector, layout)</a></li>
+                        <li><a href="#project-design">Photoshop (color, retouch)</a></li>
+                        <li><a href="#project-design">Premiere (basic editing)</a></li>
                     </ul>
                 </div>
                 <div class="skill-group">
                     <h3>Research</h3>
                     <ul>
-                        <li>Đặt câu hỏi / giả thuyết</li>
-                        <li>Viết proposal</li>
-                        <li>Viết tiểu luận</li>
+                        <li>Framing questions / hypotheses</li>
+                        <li>Writing proposals</li>
+                        <li>Writing essays</li>
                     </ul>
                 </div>
                 <div class="skill-group">
                     <h3>Coding & AI</h3>
                     <ul>
-                        <li>Python, HTML, Processing</li>
-                        <li>VS Code / GitHub Copilot</li>
-                        <li>Interactive Coding</li>
+                        <li><a href="#project-coding">Python, HTML, Processing</a></li>
+                        <li><a href="#project-coding">VS Code / GitHub Copilot</a></li>
+                        <li><a href="#project-coding">Interactive Coding</a></li>
                     </ul>
                 </div>
 
             </div>
         </section>
 
+        <!-- Projects (Card Stack Expandable) -->
+        <section class="section" id="projects" data-animate>
+            <h2>Projects</h2>
+            <div class="projects-stack" id="projects-stack">
+                <!-- Design Project Card -->
+                <article class="project-card" id="project-design" data-project>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="panel-design">
+                        <div class="project-meta">
+                            <h3>Design Project</h3>
+                            <p class="subtitle">Birthday card series, mascot & packaging exercises</p>
+                        </div>
+                        <div class="thumb-strip" aria-hidden="true">
+                            <img src="Ảnh/1318-02.png" alt="" loading="lazy">
+                            <img src="Ảnh/Asset 1.png" alt="" loading="lazy">
+                            <img src="Ảnh/Dangoo.png" alt="" loading="lazy">
+                        </div>
+                        <span class="expand-indicator" aria-hidden="true">+</span>
+                    </button>
+                    <div class="project-body" id="panel-design" hidden>
+                        <div class="project-tabs" role="tablist" aria-label="Design project views">
+                            <button role="tab" aria-selected="true" class="proj-tab"
+                                data-tab="overview-design">Overview</button>
+                            <button role="tab" aria-selected="false" class="proj-tab"
+                                data-tab="gallery-design">Gallery</button>
+                        </div>
+                        <div class="project-panels">
+                            <div id="overview-design" role="tabpanel" class="tab-panel"
+                                aria-labelledby="overview-design-tab">
+                                <div class="description">
+                                    <p>A set of classroom practice pieces exploring color mood, repetition and character
+                                        cuteness.</p>
+                                    <ul class="legend">
+                                        <li><strong>Birthday card:</strong> 6 playful palette variations.</li>
+                                        <li><strong>Mascot exercise:</strong> cheerful food-themed identity.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="gallery-design" role="tabpanel" class="tab-panel"
+                                aria-labelledby="gallery-design-tab" hidden>
+                                <div class="project-carousel" data-carousel>
+                                    <div class="carousel-track" role="group" aria-label="Design project images">
+                                        <figure class="slide active">
+                                            <img src="Ảnh/1318-02.png" alt="Birthday card design 1" loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img data-src="Ảnh/1318-03.png" alt="Birthday card design 2"
+                                                loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img data-src="Ảnh/1318-04.png" alt="Birthday card design 3"
+                                                loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img data-src="Ảnh/1318-05.png" alt="Birthday card design 4"
+                                                loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img data-src="Ảnh/1318-06.png" alt="Birthday card design 5"
+                                                loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img data-src="Ảnh/1318-07.png" alt="Birthday card design 6"
+                                                loading="lazy" />
+                                            <figcaption>Birthday card</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img class="no-bg" data-src="Ảnh/Asset 1.png" alt="Mascot design exercise 1"
+                                                loading="lazy" />
+                                            <figcaption>Mascot exercise</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <img class="no-bg" data-src="Ảnh/Dangoo.png" alt="Mascot design exercise 2"
+                                                loading="lazy" />
+                                            <figcaption>Mascot exercise</figcaption>
+                                        </figure>
+                                    </div>
+                                    <button class="carousel-nav prev" aria-label="Previous image">◂</button>
+                                    <button class="carousel-nav next" aria-label="Next image">▸</button>
+                                    <div class="carousel-dots" role="tablist" aria-label="Select design project slide">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Coding Project Card -->
+                <article class="project-card" id="project-coding" data-project>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="panel-coding">
+                        <div class="project-meta">
+                            <h3>Coding & AI Project</h3>
+                            <p class="subtitle">Processing hand tracking & auto zoom camera</p>
+                        </div>
+                        <div class="thumb-strip" aria-hidden="true">
+                            <img src="Ảnh/1.gif" alt="" loading="lazy">
+                            <img src="Ảnh/2.gif" alt="" loading="lazy">
+                            <img src="Ảnh/3.gif" alt="" loading="lazy">
+                        </div>
+                        <span class="expand-indicator" aria-hidden="true">+</span>
+                    </button>
+                    <div class="project-body" id="panel-coding" hidden>
+                        <div class="project-tabs" role="tablist" aria-label="Coding project views">
+                            <button role="tab" aria-selected="true" class="proj-tab"
+                                data-tab="overview-coding">Overview</button>
+                            <button role="tab" aria-selected="false" class="proj-tab"
+                                data-tab="gallery-coding">Gallery</button>
+                        </div>
+                        <div class="project-panels">
+                            <div id="overview-coding" role="tabpanel" class="tab-panel"
+                                aria-labelledby="overview-coding-tab">
+                                <div class="description">
+                                    <p>Simple interactive sketches demonstrating camera-driven motion + gesture tracking
+                                        blending playful visuals with logic.</p>
+                                    <ul class="legend">
+                                        <li><strong>Hand tracking:</strong> Input-driven interaction flow.</li>
+                                        <li><strong>Zoom camera:</strong> Auto scale region-of-interest.</li>
+                                        <li><strong>Goal:</strong> Bridge visual experiments & code thinking.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="gallery-coding" role="tabpanel" class="tab-panel"
+                                aria-labelledby="gallery-coding-tab" hidden>
+                                <div class="project-carousel" data-carousel>
+                                    <div class="carousel-track" role="group" aria-label="Coding project images">
+                                        <figure class="slide active">
+                                            <video class="carousel-video" autoplay loop muted playsinline preload="auto"
+                                                poster="Ảnh/1.gif">
+                                                <source data-src="Ảnh/1.mp4" type="video/mp4">
+                                                <source data-src="Ảnh/1.webm" type="video/webm">
+                                                <img src="Ảnh/1.gif" alt="Interactive coding experiment 1"
+                                                    loading="lazy" />
+                                            </video>
+                                            <figcaption>Interactive Coding</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <video class="carousel-video" loop muted playsinline preload="none"
+                                                poster="Ảnh/2.gif">
+                                                <source data-src="Ảnh/2.mp4" type="video/mp4">
+                                                <source data-src="Ảnh/2.webm" type="video/webm">
+                                                <img data-src="Ảnh/2.gif" alt="Interactive coding experiment 2"
+                                                    loading="lazy" />
+                                            </video>
+                                            <figcaption>Interactive Coding</figcaption>
+                                        </figure>
+                                        <figure class="slide">
+                                            <video class="carousel-video" loop muted playsinline preload="none"
+                                                poster="Ảnh/3.gif">
+                                                <source data-src="Ảnh/3.mp4" type="video/mp4">
+                                                <source data-src="Ảnh/3.webm" type="video/webm">
+                                                <img data-src="Ảnh/3.gif" alt="Interactive coding experiment 3"
+                                                    loading="lazy" />
+                                            </video>
+                                            <figcaption>Interactive Coding</figcaption>
+                                        </figure>
+                                    </div>
+                                    <button class="carousel-nav prev" aria-label="Previous image">◂</button>
+                                    <button class="carousel-nav next" aria-label="Next image">▸</button>
+                                    <div class="carousel-dots" role="tablist" aria-label="Select coding project slide">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
 
         <section class="section contact" id="lien-he" data-animate>
-            <h2>Liên hệ</h2>
+            <h2>Contact</h2>
             <p>Email: lieubichtranalie@gmail.com</p>
-            <p class="muted">(Hiện tại là placeholder)</p>
+            <p class="muted">(Currently a placeholder)</p>
         </section>
     </main>
 
     <footer class="footer">
-        <p>© <span id="year"></span> Liêu Bích Trân. Tạo bởi HTML/CSS/JS đơn giản.</p>
-        <a href="#top" class="back-top" aria-label="Lên đầu trang">↑</a>
+        <p>© <span id="year"></span> Liêu Bích Trân. Built with simple HTML/CSS/JS.</p>
+        <a href="#top" class="back-top" aria-label="Back to top">↑</a>
     </footer>
+
+    <!-- Lightbox viewer -->
+    <div id="lightbox" class="lightbox" aria-modal="true" role="dialog" aria-label="Image preview" hidden>
+        <button class="lightbox-close" aria-label="Close">✕</button>
+        <button class="lightbox-nav prev" aria-label="Previous">◂</button>
+        <figure class="lightbox-figure">
+            <img id="lightbox-img" src="" alt="" />
+            <figcaption id="lightbox-cap"></figcaption>
+        </figure>
+        <button class="lightbox-nav next" aria-label="Next">▸</button>
+    </div>
 
     <script src="script.js"></script>
     <!-- Sparkle effect script -->
