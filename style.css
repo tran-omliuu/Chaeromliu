@@ -1350,6 +1350,27 @@ html[data-theme='light'] body {
         width: 100%;
         height: auto;
     }
+
+    /* Mobile-specific fixes for ArtTech section */
+    #arttech-story .relative.flex.items-center.justify-center {
+        padding: 1rem !important;
+        margin-right: 0 !important;
+    }
+
+    /* Move arrow buttons inside on mobile */
+    #art-prev {
+        left: 0.5rem !important;
+    }
+
+    #art-next {
+        right: 0.5rem !important;
+    }
+
+    /* Ensure arrows are visible on mobile */
+    #art-prev,
+    #art-next {
+        z-index: 10;
+    }
 }
 
 /* Make .text-card behave like .card on hover (soft lift) */
